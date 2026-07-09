@@ -256,13 +256,46 @@ footer { position: relative; z-index: 1; border-top: 1px solid var(--border); pa
   header.nav { padding: 16px 20px; }
   nav.main-nav, .nav-cta { display: none; }
   .mobile-toggle { display: flex; }
-  .page { padding: 80px 20px 60px; }
-  .marquee { margin-left: -20px; margin-right: -20px; }
+  .page { padding: 70px 20px 50px; }
+  .marquee { margin-left: -20px; margin-right: -20px; padding: 20px 0; }
+  .marquee-track span { font-size: clamp(20px, 4vw, 40px); padding-right: 20px; }
   .stats, .featured-grid, .work-grid, .services-grid, .values, .process-steps, .form-row, .footer-inner { grid-template-columns: 1fr; }
   .footer-inner { gap: 32px; }
   .footer-bottom { flex-direction: column; text-align: center; }
   nav.main-nav.open { display: flex; position: absolute; top: 100%; left: 20px; right: 20px; flex-direction: column; padding: 12px; background: var(--surface); border-radius: 16px; margin-top: 12px; }
   nav.main-nav.open a { padding: 14px 20px; text-align: center; }
+  .hero { padding: 0; }
+  .hero-eyebrow { margin-bottom: 24px; }
+  .hero-title { margin-bottom: 24px; }
+  .hero-sub { margin-bottom: 32px; }
+  .hero-cta { gap: 10px; }
+  .btn-primary, .btn-ghost { padding: 14px 20px; font-size: 13px; width: 100%; }
+  .featured-header { flex-direction: column; gap: 12px; }
+  .featured-header h2 { font-size: clamp(28px, 6vw, 40px); }
+  .featured-header .link-more { font-size: 12px; }
+  .services-header { margin-bottom: 30px; }
+  .services-title { font-size: clamp(32px, 7vw, 60px); }
+  .poster-info { padding: 20px; }
+  .poster-info h3 { font-size: 18px; }
+  .work-header { margin-bottom: 30px; }
+  .contact-wrap { gap: 40px; }
+  .form-field input, .form-field select, .form-field textarea { padding: 12px 14px; font-size: 14px; }
+  .form-field textarea { min-height: 100px; }
+  .aside-card { padding: 20px; }
+  .about-grid { gap: 30px; }
+  .about-title { font-size: clamp(32px, 6vw, 56px); margin-bottom: 40px; }
+  .about-side h3 { font-size: 13px; }
+  .about-body p { font-size: clamp(15px, 1.3vw, 18px); }
+  .about-body p.lead { font-size: clamp(16px, 1.5vw, 22px); }
+  .founder-content { padding: 0; }
+  .founder-name { font-size: clamp(28px, 5vw, 48px); }
+  .founder-bio { font-size: clamp(14px, 1.2vw, 16px); }
+  .founder-quote { font-size: 16px; padding-left: 14px; }
+  .process h3 { font-size: clamp(24px, 3vw, 36px); }
+  .feat-card { padding: 20px; gap: 16px; }
+  .feat-icon { width: 40px; height: 40px; }
+  .feat-card h3 { font-size: 18px; }
+  .feat-card p { font-size: 13px; }
 }
 </style>
 </head>
