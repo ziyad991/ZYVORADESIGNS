@@ -754,7 +754,29 @@ footer { position: relative; z-index: 1; border-top: 1px solid var(--border); pa
   const navLinks = document.querySelectorAll('nav.main-nav a');
   const mobileToggle = document.getElementById('mobileToggle');
   const mainNav = document.getElementById('mainNav');
-  
+  const heroSubhead = document.querySelector('.hero-sub');
+  const heroSubheadText = heroSubhead ? heroSubhead.textContent.trim().replace(/\s+/g, ' ') : '';
+  let typingRun = 0;
+
+  function typeHeroSubhead() {
+    if (!heroSubhead) return;
+    const run = ++typingRun;
+    heroSubhead.textContent = '';
+    let characterIndex = 0;
+    let lastTimestamp = 0;
+
+    const typeNextCharacter = (timestamp) => {
+      if (run !== typingRun) return;
+      if (!lastTimestamp || timestamp - lastTimestamp >= 24) {
+        heroSubhead.textContent = heroSubheadText.slice(0, ++characterIndex);
+        lastTimestamp = timestamp;
+      }
+      if (characterIndex < heroSubheadText.length) requestAnimationFrame(typeNextCharacter);
+    };
+
+    requestAnimationFrame(typeNextCharacter);
+  }
+
   function navigateTo(pageId) {
     pages.forEach(p => p.classList.remove('active'));
     const target = document.getElementById(pageId);
@@ -762,6 +784,7 @@ footer { position: relative; z-index: 1; border-top: 1px solid var(--border); pa
       target.classList.add('active');
       window.scrollTo({ top: 0, behavior: 'instant' });
     }
+    if (pageId === 'home') typeHeroSubhead();
     navLinks.forEach(a => a.classList.toggle('active', a.dataset.page === pageId));
     if (history.replaceState) history.replaceState(null, '', '#' + pageId);
     if (mainNav) mainNav.classList.remove('open');
@@ -794,6 +817,7 @@ footer { position: relative; z-index: 1; border-top: 1px solid var(--border); pa
   window.addEventListener('DOMContentLoaded', () => {
     const hash = window.location.hash.replace('#', '');
     if (hash && document.getElementById(hash)) navigateTo(hash);
+    else typeHeroSubhead();
   });
   
   if (mobileToggle) {
