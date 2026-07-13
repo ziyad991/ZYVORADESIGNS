@@ -46,7 +46,7 @@ header.nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: 
 .brand { display: flex; align-items: center; gap: 12px; user-select: none; }
 .brand-logo { width: 40px; height: 40px; flex-shrink: 0; }
 .brand-logo img { width: 100%; height: 100%; object-fit: contain; transition: transform 0.7s cubic-bezier(0.16,1,0.3,1); }
-.brand:hover .brand-logo img { transform: rotate(180deg); }
+.brand:hover .brand-logo img { transform: none; }
 .brand-text { display: flex; flex-direction: column; line-height: 1; }
 .brand-name { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 16px; letter-spacing: -0.01em; color: var(--fg); }
 .brand-sub { font-size: 9px; letter-spacing: 0.3em; text-transform: uppercase; color: var(--muted); margin-top: 4px; font-weight: 500; }
@@ -316,7 +316,7 @@ footer { position: relative; z-index: 1; border-top: 1px solid var(--border); pa
       <img src="https://z-cdn-media.chatglm.cn/files/f85735b6-5456-45af-b842-db43b49b0e0a.png?auth_key=1882698475-5fbf018c8a094bb7af96ae551b6f79ec-0-d301aa6b8093f7d10b6ee24cb1b1048b" alt="ZYNORADESIGNS Logo">
     </div>
     <div class="brand-text">
-      <span class="brand-name">ZYNORADESIGNS</span>
+      <span class="brand-name">ZYVORADESIGNS</span>
       <span class="brand-sub">Creative Studio</span>
     </div>
   </div>
@@ -324,7 +324,7 @@ footer { position: relative; z-index: 1; border-top: 1px solid var(--border); pa
     <a href="#home" data-page="home" class="active">Home</a>
     <a href="#services" data-page="services" style="height: auto; flex-grow: 0;">Services</a>
     <a href="#work" data-page="work">Work</a>
-    <a href="#about" data-page="about">About</a>
+    <a href="#about" data-page="about">&nbsp;About&nbsp;</a>
     <a href="#contact" data-page="contact">Contact</a>
   </nav>
   <button class="nav-cta" data-page="contact">Start a Project</button>
@@ -595,7 +595,7 @@ footer { position: relative; z-index: 1; border-top: 1px solid var(--border); pa
 
 <section id="about" class="page">
   <div class="about-wrap">
-    <div class="about-eyebrow">About ZYNORADESIGNS</div>
+    <div class="about-eyebrow">About ZYVORADESIGNS</div>
     <h1 class="about-title">We translate <em>ideas</em> into form — quietly, precisely, on purpose.</h1>
     <div class="about-grid">
       <div class="about-side">
@@ -754,7 +754,41 @@ footer { position: relative; z-index: 1; border-top: 1px solid var(--border); pa
   const navLinks = document.querySelectorAll('nav.main-nav a');
   const mobileToggle = document.getElementById('mobileToggle');
   const mainNav = document.getElementById('mainNav');
-  
+  const heroSubhead = document.querySelector('.hero-sub');
+  const heroSubheadText = heroSubhead ? heroSubhead.textContent.trim().replace(/\s+/g, ' ') : '';
+  const founderCopy = document.querySelectorAll('#home .founder-bio, #home .founder-quote');
+  const founderTextNodes = [];
+  const founderTextValues = [];
+  founderCopy.forEach(element => {
+    const walker = document.createTreeWalker(element, NodeFilter.SHOW_TEXT);
+    let node;
+    while (node = walker.nextNode()) {
+      founderTextNodes.push(node);
+      founderTextValues.push(node.textContent);
+    }
+  });
+  let typingRun = 0;
+  let founderTypingRun = 0;
+
+  function typeHeroSubhead() {
+    if (!heroSubhead) return;
+    const run = ++typingRun;
+    heroSubhead.textContent = '';
+    let characterIndex = 0;
+    let lastTimestamp = 0;
+
+    const typeNextCharacter = (timestamp) => {
+      if (run !== typingRun) return;
+      if (!lastTimestamp || timestamp - lastTimestamp >= 12) {
+        heroSubhead.textContent = heroSubheadText.slice(0, ++characterIndex);
+        lastTimestamp = timestamp;
+      }
+      if (characterIndex < heroSubheadText.length) requestAnimationFrame(typeNextCharacter);
+    };
+
+    requestAnimationFrame(typeNextCharacter);
+  }
+
   function navigateTo(pageId) {
     pages.forEach(p => p.classList.remove('active'));
     const target = document.getElementById(pageId);
@@ -762,6 +796,7 @@ footer { position: relative; z-index: 1; border-top: 1px solid var(--border); pa
       target.classList.add('active');
       window.scrollTo({ top: 0, behavior: 'instant' });
     }
+    if (pageId === 'home') typeHeroSubhead();
     navLinks.forEach(a => a.classList.toggle('active', a.dataset.page === pageId));
     if (history.replaceState) history.replaceState(null, '', '#' + pageId);
     if (mainNav) mainNav.classList.remove('open');
@@ -794,6 +829,7 @@ footer { position: relative; z-index: 1; border-top: 1px solid var(--border); pa
   window.addEventListener('DOMContentLoaded', () => {
     const hash = window.location.hash.replace('#', '');
     if (hash && document.getElementById(hash)) navigateTo(hash);
+    else typeHeroSubhead();
   });
   
   if (mobileToggle) {
