@@ -756,7 +756,19 @@ footer { position: relative; z-index: 1; border-top: 1px solid var(--border); pa
   const mainNav = document.getElementById('mainNav');
   const heroSubhead = document.querySelector('.hero-sub');
   const heroSubheadText = heroSubhead ? heroSubhead.textContent.trim().replace(/\s+/g, ' ') : '';
+  const founderCopy = document.querySelectorAll('#home .founder-bio, #home .founder-quote');
+  const founderTextNodes = [];
+  const founderTextValues = [];
+  founderCopy.forEach(element => {
+    const walker = document.createTreeWalker(element, NodeFilter.SHOW_TEXT);
+    let node;
+    while (node = walker.nextNode()) {
+      founderTextNodes.push(node);
+      founderTextValues.push(node.textContent);
+    }
+  });
   let typingRun = 0;
+  let founderTypingRun = 0;
 
   function typeHeroSubhead() {
     if (!heroSubhead) return;
