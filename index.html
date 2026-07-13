@@ -779,7 +779,7 @@ footer { position: relative; z-index: 1; border-top: 1px solid var(--border); pa
 
     const typeNextCharacter = (timestamp) => {
       if (run !== typingRun) return;
-      if (!lastTimestamp || timestamp - lastTimestamp >= 24) {
+      if (!lastTimestamp || timestamp - lastTimestamp >= 12) {
         heroSubhead.textContent = heroSubheadText.slice(0, ++characterIndex);
         lastTimestamp = timestamp;
       }
