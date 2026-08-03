@@ -55,6 +55,7 @@ nav.main-nav { display: flex; gap: 2px; background: rgba(255,255,255,0.025); pad
 nav.main-nav a { position: relative; padding: 9px 20px; font-size: 13px; font-weight: 500; color: var(--muted); border-radius: 999px; transition: color 0.3s, background 0.3s; letter-spacing: 0.01em; }
 nav.main-nav a:hover { color: var(--fg); }
 nav.main-nav a.active { color: var(--bg); background: var(--accent); font-weight: 600; }
+.nav-services-link { height: auto; flex-grow: 0; }
 
 .nav-cta { display: inline-flex; align-items: center; gap: 8px; padding: 11px 20px; background: var(--fg); color: var(--bg); font-size: 13px; font-weight: 600; border-radius: 999px; border: none; transition: transform 0.2s, background 0.2s, color 0.2s; letter-spacing: 0.01em; }
 .nav-cta:hover { background: var(--accent); transform: translateY(-1px); }
@@ -68,6 +69,28 @@ main { position: relative; z-index: 1; }
 .page { display: none; min-height: 100vh; padding: 80px 40px 60px; position: relative; overflow: hidden; } /* Removed huge top gap */
 .page.active { display: block; animation: pageIn 0.7s cubic-bezier(0.16, 1, 0.3, 1) both; }
 @keyframes pageIn { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: translateY(0); } }
+.scroll-reveal { opacity: 0; transform: translate3d(0, 36px, 0); transition: opacity 0.75s ease, transform 0.85s cubic-bezier(0.16, 1, 0.3, 1); will-change: opacity, transform; }
+.scroll-reveal.reveal-scale { transform: scale(0.96); }
+.scroll-reveal.reveal-visible { opacity: 1; transform: translate3d(0, 0, 0); }
+.scroll-reveal.reveal-scale.reveal-visible { transform: scale(1); }
+.hero-eyebrow { transition-delay: 0.05s; }
+.hero-title { transition-delay: 0.12s; }
+.hero-sub { transition-delay: 0.2s; }
+.hero-cta { transition-delay: 0.28s; }
+.featured-grid .feat-card:nth-child(2), .services-grid .poster:nth-child(2), .work-grid .work-item:nth-child(2), .values .value-card:nth-child(2), .process-steps .process-step:nth-child(2) { transition-delay: 0.08s; }
+.featured-grid .feat-card:nth-child(3), .services-grid .poster:nth-child(3), .work-grid .work-item:nth-child(3), .values .value-card:nth-child(3), .process-steps .process-step:nth-child(3) { transition-delay: 0.16s; }
+.featured-grid .feat-card:nth-child(4), .services-grid .poster:nth-child(4), .work-grid .work-item:nth-child(4), .values .value-card:nth-child(4), .process-steps .process-step:nth-child(4) { transition-delay: 0.24s; }
+.contact-form.is-submitted { display: none; }
+.contact-eyebrow { transition-delay: 0.04s; }
+.contact-title { transition-delay: 0.12s; }
+.contact-lead { transition-delay: 0.2s; }
+.contact-form { transition-delay: 0.28s; }
+.contact-form .form-field:nth-child(2) { transition-delay: 0.08s; }
+.contact-form .form-field:nth-child(3) { transition-delay: 0.16s; }
+.contact-form .form-submit { transition-delay: 0.24s; }
+.contact-aside .aside-card:nth-child(2) { transition-delay: 0.1s; }
+.contact-aside .aside-card:nth-child(3) { transition-delay: 0.2s; }
+@media (prefers-reduced-motion: reduce) { .scroll-reveal, .scroll-reveal.reveal-scale { opacity: 1; transform: none; transition: none; } }
 
 .page-watermark { position: absolute; pointer-events: none; z-index: 0; opacity: 0.1; display: flex; align-items: center; justify-content: center; }
 .page-watermark img { width: 80%; height: 80%; object-fit: contain; filter: grayscale(0.5) saturate(0.5); }
@@ -133,6 +156,7 @@ main { position: relative; z-index: 1; }
 .founder-roles { display: flex; gap: 12px; margin-bottom: 32px; flex-wrap: wrap; }
 .role-tag { font-size: 11px; font-weight: 600; padding: 8px 14px; background: var(--accent); color: var(--bg); border-radius: 999px; text-transform: uppercase; letter-spacing: 0.05em; }
 .founder-bio { font-size: clamp(16px, 1.4vw, 20px); color: var(--muted); line-height: 1.6; max-width: 580px; margin-bottom: 32px; }
+.founder-bio-final { margin-bottom: 0; }
 .founder-bio .hl { color: var(--fg); font-weight: 500; }
 .founder-quote { font-family: 'Syne', sans-serif; font-style: italic; font-weight: 500; font-size: 22px; color: var(--fg); border-left: 3px solid var(--accent); padding-left: 20px; margin-top: 24px; }
 
@@ -204,6 +228,9 @@ main { position: relative; z-index: 1; }
 .contact-title em { font-style: italic; font-weight: 500; color: var(--accent); }
 .contact-lead { color: var(--muted); font-size: 17px; line-height: 1.6; margin-bottom: 40px; max-width: 540px; }
 .contact-form { display: flex; flex-direction: column; gap: 20px; }
+.form-honeypot { display: none; }
+.aside-copy { margin-top: 12px; color: var(--muted); font-size: 13px; }
+.availability-status { color: var(--accent); }
 .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
 .form-field { display: flex; flex-direction: column; gap: 8px; }
 .form-field label { font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted); font-weight: 500; }
@@ -322,7 +349,7 @@ footer { position: relative; z-index: 1; border-top: 1px solid var(--border); pa
   </div>
   <nav class="main-nav" id="mainNav">
     <a href="#home" data-page="home" class="active">Home</a>
-    <a href="#services" data-page="services" style="height: auto; flex-grow: 0;">Services</a>
+    <a href="#services" data-page="services" class="nav-services-link">Services</a>
     <a href="#work" data-page="work">Work</a>
     <a href="#about" data-page="about">&nbsp;About&nbsp;</a>
     <a href="#contact" data-page="contact">Contact</a>
@@ -448,7 +475,7 @@ footer { position: relative; z-index: 1; border-top: 1px solid var(--border); pa
       <p class="founder-bio">
         Muhammed Ziyad leads ZYNORADESIGNS with a multidisciplinary approach built on years of hands-on practice. As a <span class="hl">Senior Graphic Designer</span>, <span class="hl">Web Designer</span>, and <span class="hl">Photographer</span>, he bridges the gap between visual strategy and technical execution. His work is driven by a belief that great design isn't just about how it looks, but how it works—and how it makes people feel.
       </p>
-      <p class="founder-bio" style="margin-bottom: 0;">
+      <p class="founder-bio founder-bio-final">
         From crafting memorable brand identities to capturing the perfect frame, Ziyad ensures every project that leaves the studio meets a standard of uncompromising craft.
       </p>
       <div class="founder-quote">
@@ -659,7 +686,7 @@ footer { position: relative; z-index: 1; border-top: 1px solid var(--border); pa
           </select>
         </div>
         <div class="form-field"><label for="message">Project details</label><textarea id="message" name="message" placeholder="Tell us about the project — scope, timeline, budget range, anything we should know." required></textarea></div>
-        <input type="text" name="_honey" style="display:none">
+        <input type="text" name="_honey" class="form-honeypot">
         <input type="hidden" name="_subject" value="New project inquiry — ZYNORADESIGNS">
         <input type="hidden" name="_template" value="table">
         <input type="hidden" name="_captcha" value="false">
@@ -678,11 +705,11 @@ footer { position: relative; z-index: 1; border-top: 1px solid var(--border); pa
       <div class="aside-card">
         <h4>Email us directly</h4>
         <div class="big-email">mhdziyadcdhdc@gmail.com</div>
-        <p style="margin-top:12px; color: var(--muted); font-size: 13px;">For everything — inquiries, collaborations, press. We read every message.</p>
+        <p class="aside-copy">For everything — inquiries, collaborations, press. We read every message.</p>
       </div>
       <div class="aside-card">
         <h4>Studio</h4>
-        <div class="info-line"><span>Status</span><span style="color: var(--accent);">● Open for projects</span></div>
+        <div class="info-line"><span>Status</span><span class="availability-status">● Open for projects</span></div>
         <div class="info-line"><span>Response time</span><span>2 working days</span></div>
         <div class="info-line"><span>Working hours</span><span>Mon–Fri, 10–18</span></div>
         <div class="info-line"><span>Location</span><span>Remote / Worldwide</span></div>
@@ -797,6 +824,7 @@ footer { position: relative; z-index: 1; border-top: 1px solid var(--border); pa
       window.scrollTo({ top: 0, behavior: 'instant' });
     }
     if (pageId === 'home') typeHeroSubhead();
+    window.dispatchEvent(new CustomEvent('pagechange', { detail: target }));
     navLinks.forEach(a => a.classList.toggle('active', a.dataset.page === pageId));
     if (history.replaceState) history.replaceState(null, '', '#' + pageId);
     if (mainNav) mainNav.classList.remove('open');
@@ -905,7 +933,7 @@ footer { position: relative; z-index: 1; border-top: 1px solid var(--border); pa
       });
       const json = await res.json();
       if (json.success || res.ok) {
-        form.style.display = 'none';
+        form.classList.add('is-submitted');
         success.classList.add('show');
         success.scrollIntoView({ behavior: 'smooth', block: 'center' });
       } else {
@@ -922,12 +950,35 @@ footer { position: relative; z-index: 1; border-top: 1px solid var(--border); pa
 })();
 
 (function() {
-  const watermarks = document.querySelectorAll('.page-watermark');
-  if (!watermarks.length) return;
-  window.addEventListener('scroll', () => {
-    const y = window.scrollY;
-    watermarks.forEach(wm => wm.style.transform = `translateY(${y * 0.08}px)`);
-  }, { passive: true });
+  const revealSelectors = [
+    '.hero-eyebrow', '.hero-title', '.hero-sub', '.hero-cta', '.marquee', '.stats',
+    '.featured-header', '.feat-card', '.founder-image-wrap', '.founder-content',
+    '.services-header', '.poster', '.work-header', '.work-item', '.about-eyebrow',
+    '.about-title', '.about-side', '.about-body', '.value-card', '.process h3',
+    '.process-step', '.contact-eyebrow', '.contact-title', '.contact-lead', '.contact-form', '.form-field', '.form-submit', '.contact-aside', '.aside-card', '.footer-brand', '.footer-col', '.footer-bottom'
+  ];
+  const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const observer = reducedMotion ? null : new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (!entry.isIntersecting) return;
+      entry.target.classList.add('reveal-visible');
+      observer.unobserve(entry.target);
+    });
+  }, { threshold: 0.12, rootMargin: '0px 0px -40px' });
+
+  function animatePage(page) {
+    page.querySelectorAll(revealSelectors.join(',')).forEach(element => {
+      if (element.dataset.scrollPrepared) return;
+      element.dataset.scrollPrepared = 'true';
+      element.classList.add('scroll-reveal');
+      if (element.matches('.founder-image-wrap, .poster, .work-item, .value-card, .aside-card, .form-field')) element.classList.add('reveal-scale');
+      if (reducedMotion) element.classList.add('reveal-visible');
+      else observer.observe(element);
+    });
+  }
+
+  document.addEventListener('DOMContentLoaded', () => document.querySelectorAll('.page').forEach(animatePage));
+  window.addEventListener('pagechange', event => animatePage(event.detail));
 })();
 </script>
 
