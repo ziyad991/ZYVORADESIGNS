@@ -81,6 +81,15 @@ main { position: relative; z-index: 1; }
 .featured-grid .feat-card:nth-child(3), .services-grid .poster:nth-child(3), .work-grid .work-item:nth-child(3), .values .value-card:nth-child(3), .process-steps .process-step:nth-child(3) { transition-delay: 0.16s; }
 .featured-grid .feat-card:nth-child(4), .services-grid .poster:nth-child(4), .work-grid .work-item:nth-child(4), .values .value-card:nth-child(4), .process-steps .process-step:nth-child(4) { transition-delay: 0.24s; }
 .contact-form.is-submitted { display: none; }
+.contact-eyebrow { transition-delay: 0.04s; }
+.contact-title { transition-delay: 0.12s; }
+.contact-lead { transition-delay: 0.2s; }
+.contact-form { transition-delay: 0.28s; }
+.contact-form .form-field:nth-child(2) { transition-delay: 0.08s; }
+.contact-form .form-field:nth-child(3) { transition-delay: 0.16s; }
+.contact-form .form-submit { transition-delay: 0.24s; }
+.contact-aside .aside-card:nth-child(2) { transition-delay: 0.1s; }
+.contact-aside .aside-card:nth-child(3) { transition-delay: 0.2s; }
 @media (prefers-reduced-motion: reduce) { .scroll-reveal, .scroll-reveal.reveal-scale { opacity: 1; transform: none; transition: none; } }
 
 .page-watermark { position: absolute; pointer-events: none; z-index: 0; opacity: 0.1; display: flex; align-items: center; justify-content: center; }
@@ -946,7 +955,7 @@ footer { position: relative; z-index: 1; border-top: 1px solid var(--border); pa
     '.featured-header', '.feat-card', '.founder-image-wrap', '.founder-content',
     '.services-header', '.poster', '.work-header', '.work-item', '.about-eyebrow',
     '.about-title', '.about-side', '.about-body', '.value-card', '.process h3',
-    '.process-step', '.contact-wrap > *', '.footer-brand', '.footer-col', '.footer-bottom'
+    '.process-step', '.contact-eyebrow', '.contact-title', '.contact-lead', '.contact-form', '.form-field', '.form-submit', '.contact-aside', '.aside-card', '.footer-brand', '.footer-col', '.footer-bottom'
   ];
   const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   const observer = reducedMotion ? null : new IntersectionObserver((entries) => {
@@ -962,7 +971,7 @@ footer { position: relative; z-index: 1; border-top: 1px solid var(--border); pa
       if (element.dataset.scrollPrepared) return;
       element.dataset.scrollPrepared = 'true';
       element.classList.add('scroll-reveal');
-      if (element.matches('.founder-image-wrap, .poster, .work-item, .value-card, .aside-card')) element.classList.add('reveal-scale');
+      if (element.matches('.founder-image-wrap, .poster, .work-item, .value-card, .aside-card, .form-field')) element.classList.add('reveal-scale');
       if (reducedMotion) element.classList.add('reveal-visible');
       else observer.observe(element);
     });
